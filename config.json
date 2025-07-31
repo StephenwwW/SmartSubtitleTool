@@ -1,0 +1,109 @@
+{
+  "hugging_face_token": " ",
+  "whisper_cpp": {
+    "cli_path": "C:\\Users\\H\\Desktop\\video\\whisper.cpp_v1\\whisper.cpp\\build\\bin\\Release\\whisper-cli.exe",
+    "model_path": "C:\\Users\\H\\Desktop\\video\\whisper.cpp_v1\\whisper.cpp\\models\\ggml-large-v3.bin"
+  },
+  "whisperx_model": {
+    "model_name": "large-v3",
+    "compute_type": "float16"
+  },
+  "translation_models": {
+    "ja": [
+      {
+        "name": "Qwen3-30B-Instruct-A3B",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Qwen3-30B-A3B-GGUF\\Qwen3-30B-A3B-Q5_K_M.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_qwen_v2_ja"
+      },
+      {
+        "name": "Qwen3-14B-Instruct",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Qwen3-14B-GGUF\\Qwen3-14B-Q8_0.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_qwen_v2_ja"
+      },
+      {
+        "name": "Mistral-Nemo-Japanese-Instruct-2408",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Mistral-Nemo-Japanese-Instruct-2408-GGUF\\Mistral-Nemo-Japanese-Instruct-2408.Q4_K_M.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_ja_v2"
+      },
+      {
+        "name": "RakutenAI-7B-Chat",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\RakutenAI-7B-chat-q4_K_M.gguf\\RakutenAI-7B-chat-q4_K_M.gguf",
+        "api_style": "legacy",
+        "prompt_id": "simple_legacy_v3"
+      },
+      {
+        "name": "RakutenAI-7B-Instruct",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\RakutenAI-7B-instruct-q4_K_M.gguf\\RakutenAI-7B-instruct-q4_K_M.gguf",
+        "api_style": "legacy",
+        "prompt_id": "simple_legacy_v3"
+      }
+    ],
+    "en": [
+      {
+        "name": "Qwen3-30B-Instruct-A3B",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Qwen3-30B-A3B-GGUF\\Qwen3-30B-A3B-Q5_K_M.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_qwen_v2_en"
+      },
+      {
+        "name": "Qwen3-14B-Instruct",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Qwen3-14B-GGUF\\Qwen3-14B-Q8_0.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_qwen_v2_en"
+      },
+      {
+        "name": "Nous-Hermes-2-Mistral-7B-DPO",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\Nous-Hermes-2-Mistral-7B-DPO-GGUF\\Nous-Hermes-2-Mistral-7B-DPO.Q4_K_S.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_universal_v1"
+      },
+      {
+        "name": "ChatGLM3-6B",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\ChatGLM3-6B-Q4_K_M\\chatglm3-6b.Q4_K_M.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_universal_v1"
+      },
+      {
+        "name": "GLM-4-9B-Chat",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\GLM-4-9B-Chat-Q4_K_M\\glm-4-9b-chat-hf-q4_k_m.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_universal_v1"
+      },
+      {
+        "name": "Gemma-2-9B-IT",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\gemma-2-9b-it-GGUF\\gemma-2-9b-it-Q6_K.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_universal_v1"
+      },
+      {
+        "name": "Gemma-3-12B-IT",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\gemma-3-12b-it-GGUF\\gemma-3-12b-it-Q4_K_M.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_universal_v1"
+      }
+    ],
+    "mixed": [
+      {
+        "name": "Qwen3-30B-Instruct-A3B",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Qwen3-30B-A3B-GGUF\\Qwen3-30B-A3B-Q5_K_M.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_qwen_v2_ja"
+      },
+      {
+        "name": "Qwen3-14B-Instruct",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\英文暫時不用 日文還沒驗證\\Qwen3-14B-GGUF\\Qwen3-14B-Q8_0.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_qwen_v2_ja"
+      },
+      {
+        "name": "Meta-Llama-3.1-8B-Instruct",
+        "path": "C:\\Users\\H\\Downloads\\sys\\done\\【開發中】\\eng_test\\models\\GPT4All-Meta-Llama-3.1-8B-Instruct-128k-Q4_0\\Meta-Llama-3.1-8B-Instruct-128k-Q4_0.gguf",
+        "api_style": "chat",
+        "prompt_id": "pro_universal_v1"
+      }
+    ]
+  }
+}
