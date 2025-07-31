@@ -341,8 +341,11 @@ class SubtitleApp:
             command = [
                 cli_path, "-m", model_path, "-f", temp_audio_path, "-osrt",
                 "-l", self.detected_lang or "auto", "-t", "8",
-                "--vad-filter", "true", "--vad-threshold", "0.6",
-                "--max-len", "15", "--word-threshold", "0.5"
+                "--vad-filter", "true", "--vad-threshold", "0.5",
+                "--max-len", "20", "--word-threshold", "0.4",
+                "--entropy-threshold", "2.4", "--logprob-threshold", "-1.0",
+                "--no-timestamps", "false", "--beam-size", "5",
+                "--best-of", "5", "--temperature", "0.0"
             ]
             logging.info(f"執行命令: {' '.join(command)}")
 
