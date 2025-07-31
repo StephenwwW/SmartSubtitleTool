@@ -53,7 +53,9 @@ def _extract_final_translation(raw_output: str) -> str:
     從 LLM 原始輸出中提取最終翻譯句子，過濾掉 Qwen 可能生成的解釋或思考內容。
     策略：
     1. 移除空行並逆序掃描，尋找第一個不含「原文」「翻譯」「答案」「分析」「範例」「請」等關鍵字的行。
-    2. 若找不到，退而取最後一行。
+    2. 新增過濾：排除含有「但」、「不过」、「有时候」、「根据用户的要求」、「避免」、「可以接受」、「或者」、「有时候」、「有伴的」等分析語氣的句子。
+    3. 只保留最短且純中文的句子，或第一個句號前的內容。
+    4. 若找不到，退而取最後一行。
     """
     if not isinstance(raw_output, str):
         return raw_output
@@ -68,16 +70,26 @@ def _extract_final_translation(raw_output: str) -> str:
         "とても", "本当に", "思考", "理解", "根據", "建議", "因此", "所以", "然而",
         "不過", "但是", "然後", "接著", "如下", "如上", "以下", "以上", "結果",
         "輸出", "回答", "提供", "給出", "生成", "產生", "進行", "執行", "完成",
-        "開始", "結束", "正在", "已經", "將會", "應該", "可以", "必須", "需要"
+        "開始", "結束", "正在", "已經", "將會", "應該", "可以", "必須", "需要",
+        # 新增常見分析語氣
+        "但", "不过", "有时候", "根据用户的要求", "避免", "可以接受", "或者", "有伴的", "有時候", "有時", "有伴"
     ]
-    for ln in reversed(lines):
-        if not ln or all(ch in "。.!?,，,、" for ch in ln):
-            continue
-        if any(k in ln for k in forbidden_keywords):
-            continue
-        return ln
-    candidate = lines[-1]
-    return candidate
+    # 先過濾所有含有 forbidden_keywords 的行
+    candidate_lines = [ln for ln in lines if not any(k in ln for k in forbidden_keywords)]
+    # 只保留純中文（不含冒號、引號、分析語氣、標點符號過多的句子）
+    import re
+    def is_pure_zh(line):
+        # 至少有5個中文字，且不含冒號、引號、分析語氣
+        return re.match(r'^[\u4e00-\u9fff，。！？、…\s]{5,}$', line) and not any(k in line for k in forbidden_keywords)
+    pure_zh_lines = [ln for ln in candidate_lines if is_pure_zh(ln)]
+    if pure_zh_lines:
+        # 優先取最短的純中文句子
+        return min(pure_zh_lines, key=len)
+    if candidate_lines:
+        # 退而取最短的候選句
+        return min(candidate_lines, key=len)
+    # 若都沒有，退而取最後一行
+    return lines[-1]
 
 def _clean_translation(text: str) -> str:
     """移除重複詞語與雜訊符號，讓輸出更乾淨"""
