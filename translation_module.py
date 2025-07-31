@@ -14,10 +14,8 @@ def load_llm_model(model_path, model_name):
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"模型檔案不存在: {model_path}")
     try:
-        logging.info(f"翻譯模組: 正在載入新模型: {model_name}...")
         llm = Llama(model_path=model_path, n_ctx=4096, n_gpu_layers=-1, verbose=False)
         MODEL_CACHE[model_path] = llm
-        logging.info(f"翻譯模組: 模型 {model_name} 載入成功。")
         return llm
     except Exception as e:
         raise RuntimeError(f"載入模型 '{model_name}' ({model_path}) 失敗: {e}")
@@ -62,7 +60,16 @@ def _extract_final_translation(raw_output: str) -> str:
     lines = [l.strip() for l in raw_output.splitlines() if l.strip()]
     if not lines:
         return raw_output.strip()
-    forbidden_keywords = ["原文", "翻譯", "答案", "分析", "範例", "請", "需要", "確保", "首先", "总结", "最後", "检查", "希望", "用户", "你", "我", "再想想", "再考虑", "要注意", "另外", "接下来", "例如", "这样", "这里", "符合", "习惯", "表达", "语气", "避免", "问题", "处理", "可能", "显得", "组合", "检查", "考虑", "注意", "今後", "とても", "本当に"]
+    forbidden_keywords = [
+        "原文", "翻譯", "答案", "分析", "範例", "請", "需要", "確保", "首先", "总结", 
+        "最後", "检查", "希望", "用户", "你", "我", "再想想", "再考虑", "要注意", 
+        "另外", "接下来", "例如", "这样", "这里", "符合", "习惯", "表达", "语气", 
+        "避免", "问题", "处理", "可能", "显得", "组合", "检查", "考虑", "注意", "今後", 
+        "とても", "本当に", "思考", "理解", "根據", "建議", "因此", "所以", "然而",
+        "不過", "但是", "然後", "接著", "如下", "如上", "以下", "以上", "結果",
+        "輸出", "回答", "提供", "給出", "生成", "產生", "進行", "執行", "完成",
+        "開始", "結束", "正在", "已經", "將會", "應該", "可以", "必須", "需要"
+    ]
     for ln in reversed(lines):
         if not ln or all(ch in "。.!?,，,、" for ch in ln):
             continue
@@ -124,7 +131,7 @@ def translate_text(text, config, selected_model_name, main_lang_code, prompt_con
 
         # --- [核心修正] Qwen 模型專用處理路徑 ---
         if "qwen" in model_name.lower():
-            logging.info(f"偵測到 Qwen 模型，強制啟用純文字 Prompt 模式。")
+            # logging.info(f"偵測到 Qwen 模型，強制啟用純文字 Prompt 模式。")
             
             # 根據語言動態選擇 Prompt 樣板
             prompt_key = "pro_qwen_v2_ja" if main_lang_code == "ja" else "pro_qwen_v2_en"
@@ -138,7 +145,7 @@ def translate_text(text, config, selected_model_name, main_lang_code, prompt_con
             # 將 system 和 user prompt 展平成單一、乾淨的純文字 prompt
             full_prompt = f"{system_prompt}\n\n{user_prompt}".strip()
             
-            logging.info(f">>> Qwen 實際輸出 prompt (純文字) >>>\n{full_prompt}")
+            # logging.info(f">>> Qwen 實際輸出 prompt (純文字) >>>\n{full_prompt}")
             
             stop_tokens = ["<|im_end|>", "翻譯：", "翻譯:", "原文：", "原文:"]
             
@@ -207,8 +214,8 @@ def generate_bilingual_srt_content(segments, config, selected_model_name, main_l
     segments = _deduplicate_segments(segments)
     total_segments = len(segments)
     for idx, segment in enumerate(segments):
-        if (idx + 1) % 10 == 0:
-            logging.info(f"翻譯模組: 正在翻譯第 {idx + 1}/{total_segments} 句...")
+        if (idx + 1) % 50 == 0:  # 改為每 50 句才顯示一次進度
+            logging.info(f"翻譯進度: {idx + 1}/{total_segments}")
         # 清理原文內部重複與換行
         raw_original = segment.get("text", "").strip()
         original_lines = [l for l in raw_original.splitlines() if l.strip()]
@@ -226,7 +233,7 @@ def generate_bilingual_srt_content(segments, config, selected_model_name, main_l
         srt_content.append(f"{start_time} --> {end_time}")
         srt_content.append(original_text)
         srt_content.append(f"{translated_text}\n")
-    logging.info("翻譯模組: 所有句子翻譯完成。")
+    # logging.info("翻譯模組: 所有句子翻譯完成。")
     return "\n".join(srt_content)
 
 def format_time(seconds):
