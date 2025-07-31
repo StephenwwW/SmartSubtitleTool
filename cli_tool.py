@@ -124,9 +124,15 @@ def run_whisper_cpp(args, config):
         "-l", args.lang or "auto",
         "-t", "8", # 線程數
         "--vad-filter", "true",
-        "--vad-threshold", "0.6",
-        "--max-len", "15",
-        "--word-threshold", "0.5"
+        "--vad-threshold", "0.5",  # 降低 VAD 閾值以捕捉更多語音
+        "--max-len", "20",        # 增加單句最大長度
+        "--word-threshold", "0.4", # 降低詞信賴度以包容更多詞彙
+        "--entropy-threshold", "2.4",  # 熵閾值
+        "--logprob-threshold", "-1.0",  # 機率零界值
+        "--no-timestamps", "false",     # 保留生成時間碼
+        "--beam-size", "5",             # beam search 寬度
+        "--best-of", "5",               # 最佳候選數
+        "--temperature", "0.0"          # 使輸出更穩定
     ]
     
     print(f"[資訊] 執行 Whisper.cpp 指令: {' '.join(command)}")
